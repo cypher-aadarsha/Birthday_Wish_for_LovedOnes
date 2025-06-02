@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To My Love 💖</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      width: 100%;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      background-color: #000;
+    }
+    .slideshow {
+      width: 100%;
+      height: 100vh;
+      position: relative;
+    }
+    .slide {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+    .slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+    .message {
+      background-color: rgba(0,0,0,0.6);
+      color: #fff;
+      padding: 20px 30px;
+      border-radius: 12px;
+      font-size: 1.8rem;
+      text-align: center;
+      max-width: 80%;
+      animation: fadeInUp 2s ease-out;
+    }
+    .final-message {
+      font-size: 3rem;
+      color: #fff;
+      background: rgba(255, 105, 180, 0.2);
+      padding: 30px 40px;
+      border-radius: 20px;
+      text-shadow: 2px 2px 5px #000;
+      animation: glow 2s infinite alternate;
+    }
+    @keyframes fadeInUp {
+      0% {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ff69b4; }
+      to { text-shadow: 0 0 20px #ff1493, 0 0 30px #ff69b4; }
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    audio {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="confetti"></canvas>
+  <div class="slideshow" id="slideshow"></div>
+  <audio autoplay loop controls>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    const slidesData = [
+      {
+        img: 'https://picsum.photos/id/1011/1200/800',
+        msg: 'Every moment with you feels like a dream I never want to wake up from.'
+      },
+      {
+        img: 'https://picsum.photos/id/1015/1200/800',
+        msg: 'Your smile is my favorite sunrise, your voice my favorite melody.'
+      },
+      {
+        img: 'https://picsum.photos/id/1016/1200/800',
+        msg: 'In a world full of chaos, your love is my peace.'
+      },
+      {
+        img: 'https://picsum.photos/id/1018/1200/800',
+        msg: 'You came into my life like a blessing and filled every empty space.'
+      },
+      {
+        img: 'https://picsum.photos/id/1019/1200/800',
+        msg: 'No matter where life takes us, I’ll always find my home in your heart.'
+      },
+      {
+        img: 'https://picsum.photos/id/1021/1200/800',
+        msg: 'With you, even silence feels like poetry.'
+      },
+      {
+        img: 'https://picsum.photos/id/1024/1200/800',
+        msg: 'Every little moment we share becomes a memory I want to relive forever.'
+      },
+      {
+        img: 'https://picsum.photos/id/1025/1200/800',
+        msg: 'You\'re not just my love, you\'re the heartbeat I can’t live without.'
+      },
+      {
+        img: 'https://picsum.photos/id/1032/1200/800',
+        msg: 'Your love taught me the true meaning of magic—real, pure, and eternal.'
+      },
+      {
+        img: 'https://picsum.photos/id/1035/1200/800',
+        msg: 'If I had to relive my life, I\'d find you a thousand times sooner.'
+      },
+      {
+        img: 'https://picsum.photos/id/1039/1200/800',
+        msg: '<span class="final-message">Forever Yours &lt;3</span>'
+      }
+    ];
+
+    const slideshow = document.getElementById('slideshow');
+    slidesData.forEach((slide, idx) => {
+      const slideDiv = document.createElement('div');
+      slideDiv.classList.add('slide');
+      slideDiv.style.backgroundImage = `url(${slide.img})`;
+
+      const message = document.createElement('div');
+      message.classList.add('message');
+      message.innerHTML = slide.msg;
+
+      slideDiv.appendChild(message);
+      slideshow.appendChild(slideDiv);
+    });
+
+    let current = 0;
+    const allSlides = document.querySelectorAll('.slide');
+    allSlides[current].classList.add('active');
+
+    setInterval(() => {
+      allSlides[current].classList.remove('active');
+      current++;
+      if (current === allSlides.length) current = 0;
+      allSlides[current].classList.add('active');
+    }, 4000);
+
+    // Confetti
+    const confetti = document.getElementById("confetti");
+    const ctx = confetti.getContext("2d");
+    confetti.width = window.innerWidth;
+    confetti.height = window.innerHeight;
+
+    let particles = [];
+    for (let i = 0; i < 100; i++) {
+      particles.push({
+        x: Math.random() * confetti.width,
+        y: Math.random() * confetti.height,
+        r: Math.random() * 6 + 4,
+        d: Math.random() * 100,
+        color: `hsl(${Math.random() * 360}, 100%, 70%)`,
+        tilt: Math.floor(Math.random() * 10) - 10,
+        tiltAngleIncremental: (Math.random() * 0.07) + 0.05,
+        tiltAngle: 0
+      });
+    }
+
+    function drawConfetti() {
+      ctx.clearRect(0, 0, confetti.width, confetti.height);
+      for (let i = 0; i < particles.length; i++) {
+        let p = particles[i];
+        ctx.beginPath();
+        ctx.lineWidth = p.r;
+        ctx.strokeStyle = p.color;
+        ctx.moveTo(p.x + p.tilt + p.r / 3, p.y);
+        ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 5);
+        ctx.stroke();
+      }
+      updateConfetti();
+    }
+
+    function updateConfetti() {
+      for (let i = 0; i < particles.length; i++) {
+        let p = particles[i];
+        p.tiltAngle += p.tiltAngleIncremental;
+        p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
+        p.x += Math.sin(p.d);
+        p.tilt = Math.sin(p.tiltAngle - i / 3) * 15;
+
+        if (p.y > confetti.height) {
+          p.y = -10;
+          p.x = Math.random() * confetti.width;
+        }
+      }
+    }
+
+    (function animloop() {
+      requestAnimationFrame(animloop);
+      drawConfetti();
+    })();
+  </script>
+</body>
+</html>
+<script>
+    // Resize canvas on window resize
+    window.addEventListener('resize', () => {
+      confetti.width = window.innerWidth;
+      confetti.height = window.innerHeight;
+    });
+  </script>
+<script>
+    // Add a click event to the final message
+    document.querySelector('.final-message').addEventListener('click', () => {
+      alert('Thank you for being my everything! 💖');
+    });
+</script>
