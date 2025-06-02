@@ -30,23 +30,6 @@ A romantic full-screen slideshow created with HTML, CSS, and JavaScript — desi
 - ❤️ Final slide surprise: **Forever Yours <3** with glowing effect
 - 💻 Mobile and desktop responsive
 
----
-
-# 💖 Surprise Birthday Slideshow for My Love
-
-A romantic full-screen slideshow created with HTML, CSS, and JavaScript — designed to make my girlfriend feel special and emotional on her birthday. Each image displays a full-page photo with a heartfelt message, background music, beautiful transitions, and a final surprise page with "Forever Yours <3".
-
----
-
-## 🎁 Features
-
-- 🖼️ Full-screen display of each photo with emotional, romantic messages
-- 🎵 Background music (autoplay & loop) to enhance the mood
-- 🌠 Smooth animations & transitions every 4 seconds
-- 🎉 Confetti and floating particles for a magical touch
-- ❤️ Final slide surprise: **Forever Yours <3** with glowing effect
-- 💻 Mobile and desktop responsive
-
 --
 
 ---
